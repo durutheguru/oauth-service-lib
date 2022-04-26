@@ -41,8 +41,8 @@ jobs:
           NEW_VERSION=${{ steps.gitversion.outputs.semVer }}
           echo "Artifact Semantic Version: $NEW_VERSION"
           mvn versions:set -DnewVersion=${NEW_VERSION}-SNAPSHOT -s settings.xml
-#      - name: Build with Maven
-#        run: mvn clean deploy -s settings.xml -f pom.xml
+      - name: Build and Deploy with Maven
+        run: mvn clean deploy -s settings.xml -f pom.xml
       - name: Upgrading Version
         run: |
           RELEASE_TAG=${{ steps.gitversion.outputs.semVer }}
