@@ -31,7 +31,7 @@ public class ResourceServerRegistrationHandlerTest extends BaseServiceIntegratio
 
 
     @Test
-//    @Disabled
+    @Disabled
     public void testResourceServerRegistration() throws Exception {
         resourceServerProperties.setServerId(faker.code().ean13());
         serverRegistrationHandler.registerResourceServer();
