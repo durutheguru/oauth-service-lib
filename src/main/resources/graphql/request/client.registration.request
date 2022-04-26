@@ -1,0 +1,23 @@
+
+mutation RegisterClient(
+    $clientName: String!,
+    $redirectUri: [String!]!,
+    $clientSettingsMap: String,
+    $tokenSettingsMap: String
+) {
+
+    registerClient(client: {
+        clientName: $clientName,
+        redirectUris: $redirectUri,
+        clientSettingsMap: $clientSettingsMap,
+        tokenSettingsMap: $tokenSettingsMap
+    }) {
+        id
+        clientId
+        clientSecret
+        clientName
+        redirectUris
+    }
+
+}
+
