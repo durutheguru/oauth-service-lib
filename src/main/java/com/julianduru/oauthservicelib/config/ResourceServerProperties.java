@@ -3,7 +3,6 @@ package com.julianduru.oauthservicelib.config;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
@@ -16,7 +15,6 @@ import java.util.Set;
 @ConfigurationProperties(
     prefix = "code.config.oauth2.resource-server"
 )
-@Validated
 public class ResourceServerProperties {
 
 
@@ -32,3 +30,4 @@ public class ResourceServerProperties {
 
 
 }
+
