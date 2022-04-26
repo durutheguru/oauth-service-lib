@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>oauth-service-lib</artifactId>
-	<version>0.1.2-4-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>oauth-service-lib</name>
 	<description>Library for integration to OAuth_service</description>
 
