@@ -30,3 +30,4 @@ public class ResourceServerRegistrationHandlerTest extends OAuthServiceLibIntegr
 
 
 }
+
