@@ -6,6 +6,10 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.Duration;
+
+import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
+
 
 /**
  * created by julian on 26/04/2022
@@ -30,4 +34,6 @@ public class ResourceServerRegistrationHandlerTest extends OAuthServiceLibIntegr
 
 
 }
+
+
 
