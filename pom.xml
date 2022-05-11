@@ -86,6 +86,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.28</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.julianduru</groupId>
 			<artifactId>test-lib</artifactId>
 			<version>0.3.4-21-SNAPSHOT</version>
@@ -104,6 +110,13 @@
 			<version>1.16.2</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 
 	</dependencies>
 
