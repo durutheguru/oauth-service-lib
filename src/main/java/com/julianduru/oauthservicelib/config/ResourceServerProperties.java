@@ -17,7 +17,7 @@ import java.util.Set;
 @ConfigurationProperties(
     prefix = "code.config.oauth2.resource-server"
 )
-@Scope(BeanDefinition.SCOPE_PROTOTYPE)
+//@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ResourceServerProperties {
 
 
