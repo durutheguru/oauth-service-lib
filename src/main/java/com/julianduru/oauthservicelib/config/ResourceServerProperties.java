@@ -1,7 +1,9 @@
 package com.julianduru.oauthservicelib.config;
 
 import lombok.Data;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotEmpty;
@@ -15,6 +17,7 @@ import java.util.Set;
 @ConfigurationProperties(
     prefix = "code.config.oauth2.resource-server"
 )
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ResourceServerProperties {
 
 
