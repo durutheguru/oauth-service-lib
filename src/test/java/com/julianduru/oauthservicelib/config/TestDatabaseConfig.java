@@ -2,7 +2,6 @@ package com.julianduru.oauthservicelib.config;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,13 +18,8 @@ import javax.sql.DataSource;
 public class TestDatabaseConfig {
 
 
-
-    @Autowired
-    private DockerComposeContainer dockerComposeContainer;
-
-
     @Bean
-    public DataSource getDataSource() {
+    public DataSource getDataSource(DockerComposeContainer dockerComposeContainer) {
         if (dockerComposeContainer == null) {
             log.warn("Docker Compose Container not found.");
             return null;
@@ -63,3 +57,4 @@ public class TestDatabaseConfig {
 
 
 }
+

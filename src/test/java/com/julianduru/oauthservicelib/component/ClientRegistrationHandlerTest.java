@@ -13,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * created by julian on 26/04/2022
  */
-@Scope
 public class ClientRegistrationHandlerTest extends OAuthServiceLibIntegrationTest {
 
 
@@ -49,4 +48,5 @@ public class ClientRegistrationHandlerTest extends OAuthServiceLibIntegrationTes
 
 
 }
+
 

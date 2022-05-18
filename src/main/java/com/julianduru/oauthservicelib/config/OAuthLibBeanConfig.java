@@ -12,7 +12,7 @@ import org.springframework.web.reactive.function.client.WebClient;
  * created by julian on 26/04/2022
  */
 @Configuration
-public class BeanConfig {
+public class OAuthLibBeanConfig {
 
 
     @Bean

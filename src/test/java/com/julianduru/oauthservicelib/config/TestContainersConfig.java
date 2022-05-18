@@ -27,7 +27,9 @@ public class TestContainersConfig {
             new File("src/test/resources/docker-compose.yml")
         )
         .withExposedService(
-            "oauth-service_1", 10101, Wait.forListeningPort()
+            "oauth-service_1", 10101,
+            Wait.forListeningPort()
+                .withStartupTimeout(Duration.ofSeconds(300))
         );
         container.start();
 

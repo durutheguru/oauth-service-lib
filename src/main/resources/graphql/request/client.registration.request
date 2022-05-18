@@ -1,5 +1,6 @@
 
 mutation RegisterClient(
+    $clientId: String!,
     $clientName: String!,
     $redirectUri: [String!]!,
     $clientSettingsMap: String,
@@ -7,6 +8,7 @@ mutation RegisterClient(
 ) {
 
     registerClient(client: {
+        clientId: $clientId,
         clientName: $clientName,
         redirectUris: $redirectUri,
         clientSettingsMap: $clientSettingsMap,

@@ -6,8 +6,9 @@
 	<parent>
 		<groupId>com.julianduru</groupId>
 		<artifactId>parent-lib</artifactId>
-		<version>0.15.0-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
+
 
 	<artifactId>oauth-service-lib</artifactId>
 	<version>0.2.0-16-SNAPSHOT</version>
@@ -116,7 +117,6 @@
 			<artifactId>spring-jdbc</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 
 	</dependencies>
 

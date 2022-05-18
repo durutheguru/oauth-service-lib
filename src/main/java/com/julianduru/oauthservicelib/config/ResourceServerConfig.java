@@ -44,7 +44,8 @@ public class ResourceServerConfig {
             .oauth2ResourceServer()
             .jwt(
                 customizer -> customizer.jwkSetUri(jwkSetUri).jwtDecoder(jwtDecoder)
-            );
+            )
+            .and().cors().and().csrf().disable();
 
         return http.build();
     }
