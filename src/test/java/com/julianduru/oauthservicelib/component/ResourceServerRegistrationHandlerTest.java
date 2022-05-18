@@ -5,6 +5,10 @@ import com.julianduru.oauthservicelib.config.ResourceServerProperties;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.jdbc.JdbcTestUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -21,13 +25,24 @@ public class ResourceServerRegistrationHandlerTest extends OAuthServiceLibIntegr
     private ResourceServerProperties resourceServerProperties;
 
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+
     @Test
-    @Disabled
     public void testResourceServerRegistration() throws Exception {
-        resourceServerProperties.setServerId(faker.code().ean13());
         serverRegistrationHandler.registerResourceServer();
+
+        var rowCount = JdbcTestUtils.countRowsInTableWhere(
+            jdbcTemplate,
+            "resource_server",
+            String.format("resource_server_id='%s'", resourceServerProperties.getServerId())
+        );
+
+        assertThat(rowCount).isEqualTo(1);
     }
 
 
 }
+
 

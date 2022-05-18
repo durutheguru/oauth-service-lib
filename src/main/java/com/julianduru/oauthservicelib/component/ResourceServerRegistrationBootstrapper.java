@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @ConditionalOnProperty(
-    name = "code.config.oauth2.resource-server.autoRegister", havingValue = "true"
+    name = "code.config.oauth2.resource-server.bootstrap", havingValue = "true"
 )
 public class ResourceServerRegistrationBootstrapper implements ApplicationRunner {
 

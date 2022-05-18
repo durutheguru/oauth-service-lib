@@ -2,16 +2,11 @@ package com.julianduru.oauthservicelib.component;
 
 import com.julianduru.oauthservicelib.config.ClientProperties;
 import com.julianduru.oauthservicelib.dto.ClientRegistrationDto;
-import com.julianduru.oauthservicelib.dto.ResourceServerRegistrationDto;
 import graphql.kickstart.spring.webclient.boot.GraphQLRequest;
 import graphql.kickstart.spring.webclient.boot.GraphQLWebClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * created by julian on 26/04/2022

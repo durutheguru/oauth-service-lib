@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @ConditionalOnProperty(
-    name = "code.config.oauth2.client.autoRegister", havingValue = "true"
+    name = "code.config.oauth2.client.bootstrap", havingValue = "true"
 )
 public class ClientRegistrationBootstrapper implements ApplicationRunner {
 
