@@ -6,11 +6,12 @@
 	<parent>
 		<groupId>com.julianduru</groupId>
 		<artifactId>parent-lib</artifactId>
-		<version>0.15.0-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
+
 	<artifactId>oauth-service-lib</artifactId>
-	<version>0.1.4-10-SNAPSHOT</version>
+	<version>0.2.0-16-SNAPSHOT</version>
 	<name>oauth-service-lib</name>
 	<description>Library for integration to OAuth_service</description>
 
@@ -21,9 +22,20 @@
 	</properties>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
 		<dependency>
@@ -75,6 +87,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.28</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.julianduru</groupId>
 			<artifactId>test-lib</artifactId>
 			<version>0.3.4-21-SNAPSHOT</version>
@@ -84,6 +102,19 @@
 		<dependency>
 			<groupId>io.projectreactor</groupId>
 			<artifactId>reactor-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers</artifactId>
+			<version>1.16.2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
 			<scope>test</scope>
 		</dependency>
 

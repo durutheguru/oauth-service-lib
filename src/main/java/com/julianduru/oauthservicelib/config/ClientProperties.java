@@ -21,6 +21,9 @@ import java.util.Set;
 public class ClientProperties {
 
 
+    private String clientId;
+
+
     private String clientName;
 
 
@@ -35,6 +38,10 @@ public class ClientProperties {
 
     public Map<String, Object> buildMap() {
         var map = new HashMap<String, Object>();
+
+        if (StringUtils.hasText(getClientId())) {
+            map.put("clientId", getClientId());
+        }
 
         if (StringUtils.hasText(getClientName())) {
             map.put("clientName", getClientName());
