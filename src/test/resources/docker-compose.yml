@@ -21,22 +21,6 @@ services:
     networks:
       - docker-net
 
-#  oauth-service:
-#    depends_on:
-#      - mysqldb
-#    build: .
-#    restart: always
-#    ports:
-#      - "10101:10101"
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/oauth-service?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&useLegacyDatetimeCode=false
-#      SPRING_DATASOURCE_USERNAME: root
-#      SPRING_DATASOURCE_PASSWORD: 1234567890
-#    stdin_open: true
-#    tty: true
-#    networks:
-#      - docker-net
-
   oauth-service:
     depends_on:
       mysqldb:
