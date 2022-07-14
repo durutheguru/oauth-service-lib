@@ -2,17 +2,13 @@ package com.julianduru.oauthservicelib.config;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.testcontainers.containers.ContainerState;
 import org.testcontainers.containers.DockerComposeContainer;
-import org.testcontainers.containers.wait.strategy.HostPortWaitStrategy;
 import org.testcontainers.containers.wait.strategy.Wait;
-import org.testcontainers.containers.wait.strategy.WaitStrategy;
 
 import java.io.File;
 import java.time.Duration;
-//import org.tes
 
 /**
  * created by julian on 09/05/2022
