@@ -2,6 +2,8 @@ package com.julianduru.oauthservicelib.config;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -13,6 +15,7 @@ import org.testcontainers.containers.ContainerState;
 import org.testcontainers.containers.DockerComposeContainer;
 
 import javax.sql.DataSource;
+import java.util.Objects;
 
 /**
  * created by julian on 10/05/2022
@@ -55,15 +58,17 @@ public class TestDatabaseConfig {
 
 
     @Bean
-    @ConditionalOnProperty(name = "testcontainers.enabled", havingValue = "true")
-    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-        return new JdbcTemplate(dataSource);
+    public JdbcTemplate jdbcTemplate(
+        @Autowired(required = false) DataSource dataSource,
+        DataSourceProperties properties
+    ) {
+        return new JdbcTemplate(
+            Objects.requireNonNullElseGet(dataSource, () -> dataSource(properties))
+        );
     }
 
 
-    public DataSource dataSource(
-        DataSourceProperties properties
-    ) {
+    private DataSource dataSource(DataSourceProperties properties) {
         var dataSource = new DriverManagerDataSource();
 
         dataSource.setUrl(properties.getUrl());
@@ -72,13 +77,6 @@ public class TestDatabaseConfig {
         dataSource.setDriverClassName(properties.getDriverClassName());
 
         return dataSource;
-    }
-
-
-    @Bean
-    @ConditionalOnMissingBean(JdbcTemplate.class)
-    public JdbcTemplate jdbcTemplate(DataSourceProperties properties) {
-        return new JdbcTemplate(dataSource(properties));
     }
 
 
