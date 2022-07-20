@@ -38,7 +38,7 @@ public class TestContainersConfig {
     @Bean
     @ConditionalOnProperty(name = "testcontainers.enabled", havingValue = "true")
     public WebClient oauthServerGQLWebClient(
-        DockerComposeContainer<?> dockerComposeContainer,
+        DockerComposeContainer dockerComposeContainer,
         WebClientOAuthConfigurer webClientOAuthConfigurer
     ) {
         var containerStateOptional = dockerComposeContainer.getContainerByServiceName("oauth-service_1");
