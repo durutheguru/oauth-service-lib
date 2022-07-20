@@ -2,10 +2,11 @@ package com.julianduru.oauthservicelib.component;
 
 import com.julianduru.oauthservicelib.OAuthServiceLibIntegrationTest;
 import com.julianduru.oauthservicelib.config.ClientProperties;
+import com.julianduru.oauthservicelib.config.ResourceServerProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.jdbc.JdbcTestUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,6 +26,10 @@ public class ClientRegistrationHandlerTest extends OAuthServiceLibIntegrationTes
 
 
     @Autowired
+    private ResourceServerProperties resourceServerProperties;
+
+
+    @Autowired
     private ClientProperties clientProperties;
 
 
@@ -34,6 +39,9 @@ public class ClientRegistrationHandlerTest extends OAuthServiceLibIntegrationTes
 
     @Test
     public void testClientRegistration() throws Exception {
+        resourceServerProperties.setServerId(faker.code().isbn13());
+        clientProperties.setClientId(faker.code().isbn13());
+
         serverRegistrationHandler.registerResourceServer();
         clientRegistrationHandler.registerClient();
 

@@ -8,8 +8,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.codec.ClientCodecConfigurer;
-import org.springframework.security.oauth2.client.*;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.AuthorizedClientServiceReactiveOAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientProviderBuilder;
+import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
@@ -23,17 +25,17 @@ public class OAuthLibBeanConfig {
 
 
     @Bean
-    public OAuth2AuthorizedClientManager authorizedClientManager(
-        final ClientRegistrationRepository clientRegistrationRepository,
-        final OAuth2AuthorizedClientService authorizedClientService
+    public ReactiveOAuth2AuthorizedClientManager authorizedClientManager(
+        final ReactiveClientRegistrationRepository clientRegistrationRepository,
+        final ReactiveOAuth2AuthorizedClientService authorizedClientService
     ) {
         var authorizedClientProvider =
-            OAuth2AuthorizedClientProviderBuilder.builder()
+            ReactiveOAuth2AuthorizedClientProviderBuilder.builder()
                 .clientCredentials()
                 .build();
 
         var authorizedClientManager =
-            new AuthorizedClientServiceOAuth2AuthorizedClientManager(
+            new AuthorizedClientServiceReactiveOAuth2AuthorizedClientManager(
                 clientRegistrationRepository, authorizedClientService
             );
 

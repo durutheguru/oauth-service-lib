@@ -2,9 +2,13 @@ package com.julianduru.oauthservicelib.config;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.testcontainers.containers.ContainerState;
 import org.testcontainers.containers.DockerComposeContainer;
 
@@ -19,7 +23,8 @@ public class TestDatabaseConfig {
 
 
     @Bean
-    public DataSource getDataSource(DockerComposeContainer dockerComposeContainer) {
+    @ConditionalOnProperty(name = "testcontainers.enabled", havingValue = "true")
+    public DataSource dataSource(DockerComposeContainer dockerComposeContainer) {
         if (dockerComposeContainer == null) {
             log.warn("Docker Compose Container not found.");
             return null;
@@ -50,11 +55,33 @@ public class TestDatabaseConfig {
 
 
     @Bean
+    @ConditionalOnProperty(name = "testcontainers.enabled", havingValue = "true")
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
 
 
+    public DataSource dataSource(
+        DataSourceProperties properties
+    ) {
+        var dataSource = new DriverManagerDataSource();
+
+        dataSource.setUrl(properties.getUrl());
+        dataSource.setUsername(properties.getUsername());
+        dataSource.setPassword(properties.getPassword());
+        dataSource.setDriverClassName(properties.getDriverClassName());
+
+        return dataSource;
+    }
+
+
+    @Bean
+    @ConditionalOnMissingBean(JdbcTemplate.class)
+    public JdbcTemplate jdbcTemplate(DataSourceProperties properties) {
+        return new JdbcTemplate(dataSource(properties));
+    }
+
 
 }
+
 

@@ -1,5 +1,6 @@
 package com.julianduru.oauthservicelib.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -18,6 +19,7 @@ public class TestContainersConfig {
 
 
     @Bean
+    @ConditionalOnProperty(name = "testcontainers.enabled", havingValue = "true")
     public DockerComposeContainer dockerComposeContainer() {
         var container = new DockerComposeContainer<>(
             new File("src/test/resources/docker-compose.yml")
@@ -34,6 +36,7 @@ public class TestContainersConfig {
 
 
     @Bean
+    @ConditionalOnProperty(name = "testcontainers.enabled", havingValue = "true")
     public WebClient oauthServerWebClient(DockerComposeContainer dockerComposeContainer) {
         var containerStateOptional = dockerComposeContainer.getContainerByServiceName("oauth-service_1");
         if (containerStateOptional.isPresent()) {

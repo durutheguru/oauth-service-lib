@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * created by julian on 26/04/2022
  */
@@ -53,11 +55,13 @@ public class ResourceServerRegistrationHandler {
         var response = oauthServerGraphQLClient.post(request).blockOptional();
         if (response.isPresent()) {
             var gqlResponse = response.get();
+            gqlResponse.validateNoErrors();
+
             var responseData = gqlResponse.getFirst(ResourceServerRegistrationDto.class);
             log.info("Deserialized response: {}", responseData);
         }
         else {
-            log.info("No Response received");
+            throw new IllegalStateException("No Response received");
         }
     }
 
