@@ -70,7 +70,7 @@ public class TestContainersConfig {
             );
 
         log.info("OAuth Service URL: {}", oauthServiceUrl);
-        
+
         return webClientOAuthConfigurer.configureWebClient(oauthServiceUrl);
     }
 
