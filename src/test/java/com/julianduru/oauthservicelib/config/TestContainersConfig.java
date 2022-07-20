@@ -28,6 +28,7 @@ public class TestContainersConfig {
             "oauth-service_1", 10101,
             Wait.forHttp("/")
                 .forStatusCodeMatching(code -> code >= 200 && code <= 500)
+                .withStartupTimeout(Duration.ofSeconds(600))
         );
         container.start();
 
@@ -57,5 +58,6 @@ public class TestContainersConfig {
 
 
 }
+
 
 
