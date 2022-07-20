@@ -37,7 +37,10 @@ public class TestContainersConfig {
 
     @Bean
     @ConditionalOnProperty(name = "testcontainers.enabled", havingValue = "true")
-    public WebClient oauthServerWebClient(DockerComposeContainer dockerComposeContainer) {
+    public WebClient oauthServerGQLWebClient(
+        DockerComposeContainer<?> dockerComposeContainer,
+        WebClientOAuthConfigurer webClientOAuthConfigurer
+    ) {
         var containerStateOptional = dockerComposeContainer.getContainerByServiceName("oauth-service_1");
         if (containerStateOptional.isPresent()) {
             var containerState = (ContainerState) containerStateOptional.get();
@@ -45,10 +48,8 @@ public class TestContainersConfig {
             var portBinding = containerState.getPortBindings().get(0);
             var oauthServicePort = Integer.parseInt(portBinding.substring(0, portBinding.indexOf(":")));
 
-            return WebClient.builder().baseUrl(
-                    String.format("http://%s:%d/graphql", oauthServiceIp, oauthServicePort)
-                )
-                .build();
+            var baseUrl = String.format("http://%s:%d/graphql", oauthServiceIp, oauthServicePort);
+            webClientOAuthConfigurer.configureWebClient(baseUrl);
         }
 
         throw new IllegalStateException("Cannot find docker compose service name: oauth-service");
@@ -56,4 +57,5 @@ public class TestContainersConfig {
 
 
 }
+
 
