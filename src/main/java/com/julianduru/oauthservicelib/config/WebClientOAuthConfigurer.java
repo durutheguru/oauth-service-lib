@@ -15,6 +15,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RequiredArgsConstructor
 public class WebClientOAuthConfigurer {
 
+
     final ReactiveOAuth2AuthorizedClientManager manager;
 
 
