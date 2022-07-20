@@ -24,7 +24,7 @@ public class TestContainersConfig {
         )
         .withExposedService(
             "oauth-service_1", 10101,
-            Wait.forLogMessage("started on", 1)
+            Wait.forListeningPort()
                 .withStartupTimeout(Duration.ofSeconds(300))
         );
         container.start();
