@@ -2,6 +2,7 @@ package com.julianduru.oauthservicelib.component;
 
 import com.julianduru.oauthservicelib.config.ClientProperties;
 import com.julianduru.oauthservicelib.dto.ClientRegistrationDto;
+import com.julianduru.oauthservicelib.dto.ResourceServerRegistrationDto;
 import graphql.kickstart.spring.webclient.boot.GraphQLRequest;
 import graphql.kickstart.spring.webclient.boot.GraphQLWebClient;
 import lombok.RequiredArgsConstructor;
@@ -35,12 +36,10 @@ public class ClientRegistrationHandler {
 
         if (response.isPresent()) {
             var gqlResponse = response.get();
-            if (!gqlResponse.getErrors().isEmpty()) {
-                log.error(gqlResponse.getErrors().get(0).toString(), new Throwable("Error while registering Client"));
-            }
-            else {
-                log.info("Deserialized response: {}", gqlResponse.getFirst(ClientRegistrationDto.class));
-            }
+            gqlResponse.validateNoErrors();
+
+            var responseData = gqlResponse.getFirst(ClientRegistrationDto.class);
+            log.info("Deserialized response: {}", responseData);
         }
         else {
             log.info("No Response received");

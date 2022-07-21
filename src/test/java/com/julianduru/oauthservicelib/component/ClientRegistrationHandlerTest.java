@@ -39,9 +39,9 @@ public class ClientRegistrationHandlerTest extends OAuthServiceLibIntegrationTes
 
     @Test
     public void testClientRegistration() throws Exception {
-        resourceServerProperties.setServerId(faker.code().isbn13());
-        clientProperties.setClientId(faker.code().isbn13());
-        clientProperties.setClientName(clientProperties.getClientName() + faker.code().isbn10());
+//        resourceServerProperties.setServerId(faker.code().isbn13());
+//        clientProperties.setClientId(faker.code().isbn13());
+//        clientProperties.setClientName(clientProperties.getClientName() + faker.code().isbn10());
 
         serverRegistrationHandler.registerResourceServer();
         clientRegistrationHandler.registerClient();
@@ -53,6 +53,8 @@ public class ClientRegistrationHandlerTest extends OAuthServiceLibIntegrationTes
         );
 
         assertThat(rowCount).isEqualTo(1);
+
+
     }
 
 
