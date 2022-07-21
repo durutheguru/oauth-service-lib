@@ -2,7 +2,9 @@ package com.julianduru.oauthservicelib.component;
 
 import com.julianduru.oauthservicelib.config.ResourceServerProperties;
 import com.julianduru.oauthservicelib.dto.ResourceServerRegistrationDto;
+import graphql.kickstart.spring.webclient.boot.GraphQLErrorsException;
 import graphql.kickstart.spring.webclient.boot.GraphQLRequest;
+import graphql.kickstart.spring.webclient.boot.GraphQLResponse;
 import graphql.kickstart.spring.webclient.boot.GraphQLWebClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -54,14 +56,23 @@ public class ResourceServerRegistrationHandler {
 
         var response = oauthServerGraphQLClient.post(request).blockOptional();
         if (response.isPresent()) {
-            var gqlResponse = response.get();
+            readResponse(response.get());
+        }
+        else {
+            throw new IllegalStateException("No Response received");
+        }
+    }
+
+
+    private void readResponse(GraphQLResponse gqlResponse) {
+        try {
             gqlResponse.validateNoErrors();
 
             var responseData = gqlResponse.getFirst(ResourceServerRegistrationDto.class);
             log.info("Deserialized response: {}", responseData);
         }
-        else {
-            throw new IllegalStateException("No Response received");
+        catch (GraphQLErrorsException t) {
+            log.warn(t.getMessage(), t);
         }
     }
 
