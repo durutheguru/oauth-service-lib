@@ -33,8 +33,6 @@ public class ResourceServerRegistrationHandlerTest extends OAuthServiceLibIntegr
 
     @Test
     public void testResourceServerRegistration() throws Exception {
-//        resourceServerProperties.setServerId(faker.code().isbn13());
-
         serverRegistrationHandler.registerResourceServer();
 
         var rowCount = JdbcTestUtils.countRowsInTableWhere(
