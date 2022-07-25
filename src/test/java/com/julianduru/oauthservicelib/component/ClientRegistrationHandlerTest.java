@@ -2,9 +2,9 @@ package com.julianduru.oauthservicelib.component;
 
 import com.julianduru.oauthservicelib.OAuthServiceLibIntegrationTest;
 import com.julianduru.oauthservicelib.config.ClientProperties;
+import com.julianduru.oauthservicelib.config.ResourceServerProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.jdbc.JdbcTestUtils;
 
@@ -22,6 +22,10 @@ public class ClientRegistrationHandlerTest extends OAuthServiceLibIntegrationTes
 
     @Autowired
     private ResourceServerRegistrationHandler serverRegistrationHandler;
+
+
+    @Autowired
+    private ResourceServerProperties resourceServerProperties;
 
 
     @Autowired
@@ -44,6 +48,8 @@ public class ClientRegistrationHandlerTest extends OAuthServiceLibIntegrationTes
         );
 
         assertThat(rowCount).isEqualTo(1);
+
+
     }
 
 
