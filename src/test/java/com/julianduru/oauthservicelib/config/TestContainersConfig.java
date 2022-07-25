@@ -44,24 +44,6 @@ public class TestContainersConfig {
         DockerComposeContainer dockerComposeContainer
         , WebClientOAuthConfigurer webClientOAuthConfigurer
     ) {
-//        var containerStateOptional = dockerComposeContainer.getContainerByServiceName("oauth-service_1");
-//        if (containerStateOptional.isPresent()) {
-//            var containerState = (ContainerState) containerStateOptional.get();
-//            var oauthServiceIp = containerState.getHost();
-//            var portBinding = containerState.getPortBindings().get(0);
-//            var oauthServicePort = Integer.parseInt(portBinding.substring(0, portBinding.indexOf(":")));
-//
-//            var baseUrl = String.format("http://%s:%d/graphql", oauthServiceIp, oauthServicePort);
-////            webClientOAuthConfigurer.configureWebClient(baseUrl);
-//            return WebClient.builder()
-////                .exchangeStrategies(exchangeStrategies)
-//                .baseUrl(baseUrl)
-////                .filter(oauth)
-//                .build();
-//        }
-//
-//        throw new IllegalStateException("Cannot find docker compose service name: oauth-service");
-
         String oauthServiceUrl =
             String.format(
                 "%s:%s/graphql",
