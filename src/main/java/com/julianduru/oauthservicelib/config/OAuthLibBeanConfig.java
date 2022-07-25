@@ -6,6 +6,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.client.AuthorizedClientServiceReactiveOAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientProviderBuilder;
+import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
@@ -16,12 +21,32 @@ public class OAuthLibBeanConfig {
 
 
     @Bean
-    @ConditionalOnMissingBean(name = {"oauthServerWebClient"})
-    public WebClient oauthServerWebClient(
-        @Value("${code.config.oauth2.authorization-server.gql-base-url}") String oauthServerUrl
+    public ReactiveOAuth2AuthorizedClientManager authorizedClientManager(
+        final ReactiveClientRegistrationRepository clientRegistrationRepository,
+        final ReactiveOAuth2AuthorizedClientService authorizedClientService
     ) {
-        return WebClient.builder().baseUrl(oauthServerUrl)
-            .build();
+        var authorizedClientProvider =
+            ReactiveOAuth2AuthorizedClientProviderBuilder.builder()
+                .clientCredentials()
+                .build();
+
+        var authorizedClientManager =
+            new AuthorizedClientServiceReactiveOAuth2AuthorizedClientManager(
+                clientRegistrationRepository, authorizedClientService
+            );
+
+        authorizedClientManager.setAuthorizedClientProvider(authorizedClientProvider);
+        return authorizedClientManager;
+    }
+
+
+    @Bean
+    @ConditionalOnMissingBean(name = {"oauthServerGQLWebClient"})
+    public WebClient oauthServerGQLWebClient(
+        @Value("${code.config.oauth2.authorization-server.gql-base-url}") String oauthServerGQLUrl,
+        WebClientOAuthConfigurer webClientOAuthConfigurer
+    ) {
+        return webClientOAuthConfigurer.configureWebClient(oauthServerGQLUrl);
     }
 
 
@@ -32,4 +57,5 @@ public class OAuthLibBeanConfig {
 
 
 }
+
 

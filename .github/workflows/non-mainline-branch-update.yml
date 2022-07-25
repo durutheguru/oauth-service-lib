@@ -34,4 +34,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: mvn -B verify -s settings.xml -f pom.xml
+      run: mvn -B verify -Dtestcontainers.enabled=true -s settings.xml -f pom.xml

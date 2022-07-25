@@ -2,7 +2,6 @@ package com.julianduru.oauthservicelib.component;
 
 import com.julianduru.oauthservicelib.OAuthServiceLibIntegrationTest;
 import com.julianduru.oauthservicelib.config.ResourceServerProperties;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

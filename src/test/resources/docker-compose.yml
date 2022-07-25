@@ -15,7 +15,7 @@ services:
       - MYSQL_DATABASE=oauth_service
       - MYSQL_ROOT_PASSWORD=1234567890
     ports:
-      - "3308:3306"
+      - "33080:3306"
     volumes:
       - db:/var/lib/mysql
     networks:
@@ -25,7 +25,7 @@ services:
     depends_on:
       mysqldb:
         condition: service_healthy
-    image: durutheguru/oauth-service:latest
+    image: durutheguru/oauth-service:0.2.0-main.135
     restart: always
     ports:
       - "10101:10101"
