@@ -1,5 +1,6 @@
 package com.julianduru.oauthservicelib.config;
 
+import com.mysql.cj.jdbc.MysqlDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -9,6 +10,7 @@ import org.testcontainers.containers.ContainerState;
 import org.testcontainers.containers.DockerComposeContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 
+import javax.sql.DataSource;
 import java.io.File;
 import java.time.Duration;
 
@@ -17,11 +19,11 @@ import java.time.Duration;
  */
 @Slf4j
 @TestConfiguration
+@ConditionalOnProperty(name = "testcontainers.enabled", havingValue = "true")
 public class TestContainersConfig {
 
 
     @Bean
-    @ConditionalOnProperty(name = "testcontainers.enabled", havingValue = "true")
     public DockerComposeContainer dockerComposeContainer() {
         var container = new DockerComposeContainer<>(
             new File("src/test/resources/docker-compose.yml")
@@ -39,7 +41,6 @@ public class TestContainersConfig {
 
 
     @Bean
-    @ConditionalOnProperty(name = "testcontainers.enabled", havingValue = "true")
     public WebClient oauthServerGQLWebClient(
         DockerComposeContainer dockerComposeContainer
         , WebClientOAuthConfigurer webClientOAuthConfigurer
@@ -54,6 +55,37 @@ public class TestContainersConfig {
         log.info("OAuth Service URL: {}", oauthServiceUrl);
 
         return webClientOAuthConfigurer.configureWebClient(oauthServiceUrl);
+    }
+
+
+    @Bean
+    public DataSource dataSource(DockerComposeContainer dockerComposeContainer) {
+        if (dockerComposeContainer == null) {
+            log.warn("Docker Compose Container not found.");
+            return null;
+        }
+
+        var containerStateOptional = dockerComposeContainer.getContainerByServiceName("mysqldb_1");
+        if (containerStateOptional.isPresent()) {
+            var containerState = (ContainerState) containerStateOptional.get();
+            var oauthServiceIp = containerState.getContainerIpAddress();
+            var portBinding = containerState.getPortBindings().get(0);
+            var oauthServicePort = Integer.parseInt(portBinding.substring(0, portBinding.indexOf(":")));
+
+            var dataSource = new MysqlDataSource();
+            dataSource.setURL(
+                String.format(
+                    "jdbc:mysql://%s:%d/oauth_service?createDatabaseIfNotExist=true",
+                    oauthServiceIp, oauthServicePort
+                )
+            );
+            dataSource.setUser("root");
+            dataSource.setPassword("1234567890");
+
+            return dataSource;
+        }
+
+        throw new IllegalStateException("Cannot find docker compose service name: mysqldb");
     }
 
 
