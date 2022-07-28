@@ -20,6 +20,15 @@
 		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
 
+
+	<scm>
+		<url>https://github.com/durutheguru/oauth-service-lib.git</url>
+		<connection>scm:git:git://github.com/durutheguru/oauth-service-lib.git</connection>
+		<developerConnection>scm:git:git//github.com/durutheguru/durutheguru.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+
+
 	<dependencies>
 
 		<dependency>
