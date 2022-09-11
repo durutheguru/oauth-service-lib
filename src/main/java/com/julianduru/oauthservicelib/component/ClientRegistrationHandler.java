@@ -1,15 +1,18 @@
 package com.julianduru.oauthservicelib.component;
 
+import com.julianduru.oauthservicelib.component.event.ClientRegistrationSuccessEvent;
 import com.julianduru.oauthservicelib.config.ClientProperties;
 import com.julianduru.oauthservicelib.dto.ClientRegistrationDto;
-import com.julianduru.oauthservicelib.dto.ResourceServerRegistrationDto;
 import graphql.kickstart.spring.webclient.boot.GraphQLErrorsException;
 import graphql.kickstart.spring.webclient.boot.GraphQLRequest;
 import graphql.kickstart.spring.webclient.boot.GraphQLResponse;
 import graphql.kickstart.spring.webclient.boot.GraphQLWebClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 /**
  * created by julian on 26/04/2022
@@ -26,6 +29,9 @@ public class ClientRegistrationHandler {
     private final ClientProperties clientProperties;
 
 
+    private final ApplicationEventPublisher eventPublisher;
+
+
     public void registerClient() throws Exception {
         var request = GraphQLRequest.builder()
             .resource(
@@ -37,7 +43,10 @@ public class ClientRegistrationHandler {
         var response = oauthServerGraphQLClient.post(request).blockOptional();
 
         if (response.isPresent()) {
-            readResponse(response.get());
+            var responseData = readResponse(response.get());
+            responseData.ifPresent(
+                data -> eventPublisher.publishEvent(new ClientRegistrationSuccessEvent(data))
+            );
         }
         else {
             log.info("No Response received");
@@ -45,15 +54,18 @@ public class ClientRegistrationHandler {
     }
 
 
-    private void readResponse(GraphQLResponse gqlResponse) {
+    private Optional<ClientRegistrationDto> readResponse(GraphQLResponse gqlResponse) {
         try {
             gqlResponse.validateNoErrors();
 
             var responseData = gqlResponse.getFirst(ClientRegistrationDto.class);
             log.info("Deserialized response: {}", responseData);
+
+            return Optional.of(responseData);
         }
         catch (GraphQLErrorsException t) {
             log.warn(t.getMessage(), t);
+            return Optional.empty();
         }
     }
 

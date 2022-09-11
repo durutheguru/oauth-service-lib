@@ -49,7 +49,6 @@ public class ClientRegistrationHandlerTest extends OAuthServiceLibIntegrationTes
 
         assertThat(rowCount).isEqualTo(1);
 
-
     }
 
 
