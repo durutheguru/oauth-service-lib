@@ -1,5 +1,6 @@
 package com.julianduru.oauthservicelib.modules.authflow;
 
+import com.julianduru.oauthservicelib.dto.OAuthAccessToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class OAuthCodeController {
 
 
     @PostMapping
-    public Mono<String> authorizeCode(@RequestParam("code") String code) {
+    public Mono<OAuthAccessToken> authorizeCode(@RequestParam("code") String code) {
         return oAuthFlowService.exchangeAuthorizationCode(code);
     }
 
