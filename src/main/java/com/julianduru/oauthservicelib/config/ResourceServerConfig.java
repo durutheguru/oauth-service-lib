@@ -5,12 +5,18 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.ReactiveAuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.jwt.*;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
 import java.util.ArrayList;
@@ -35,10 +41,30 @@ public class ResourceServerConfig {
     private String jwkSetUri;
 
 
+//    @Bean
+//    @Order(Ordered.HIGHEST_PRECEDENCE)
+//    SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http, ReactiveAuthenticationManager authenticationManager) throws Exception {
+//        http
+//            .authorizeExchange()
+//            .pathMatchers("/auth/token")
+//            .authenticated()
+//            .and().httpBasic()
+//            .authenticationManager(authenticationManagerBuilder.getOrBuild())
+//            .and().cors().and().csrf().disable();
+//
+//        return http.build();
+//    }
+
+
     @Bean
-    @Primary
+    @Order(Ordered.HIGHEST_PRECEDENCE + 1)
+//    @Primary
     SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http, ReactiveJwtDecoder jwtDecoder) throws Exception {
         http.authorizeExchange()
+            .pathMatchers("/auth/token")
+            .permitAll()
+            .and()
+            .authorizeExchange()
             .anyExchange().authenticated()
             .and()
             .oauth2ResourceServer()

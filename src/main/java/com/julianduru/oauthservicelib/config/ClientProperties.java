@@ -24,6 +24,9 @@ public class ClientProperties {
     private String clientId;
 
 
+    private String clientSecret;
+
+
     private String clientName;
 
 
@@ -41,6 +44,10 @@ public class ClientProperties {
 
         if (StringUtils.hasText(getClientId())) {
             map.put("clientId", getClientId());
+        }
+
+        if (StringUtils.hasText(getClientSecret())) {
+            map.put("clientSecret", getClientSecret());
         }
 
         if (StringUtils.hasText(getClientName())) {

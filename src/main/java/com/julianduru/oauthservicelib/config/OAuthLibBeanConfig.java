@@ -41,6 +41,15 @@ public class OAuthLibBeanConfig {
 
 
     @Bean
+    public WebClient oauthServerWebClient(
+        @Value("${code.config.oauth2.authorization-server.base-url}") String oauthServerUrl,
+        WebClientOAuthConfigurer webClientOAuthConfigurer
+    ) {
+        return webClientOAuthConfigurer.configureWebClient(oauthServerUrl);
+    }
+
+
+    @Bean
     @ConditionalOnMissingBean(name = {"oauthServerGQLWebClient"})
     public WebClient oauthServerGQLWebClient(
         @Value("${code.config.oauth2.authorization-server.gql-base-url}") String oauthServerGQLUrl,
@@ -51,8 +60,8 @@ public class OAuthLibBeanConfig {
 
 
     @Bean
-    public GraphQLWebClient oauthServerGraphQLClient(WebClient oauthServerWebClient) {
-        return GraphQLWebClient.newInstance(oauthServerWebClient, new ObjectMapper());
+    public GraphQLWebClient oauthServerGraphQLClient(WebClient oauthServerGQLWebClient) {
+        return GraphQLWebClient.newInstance(oauthServerGQLWebClient, new ObjectMapper());
     }
 
 
