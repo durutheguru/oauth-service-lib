@@ -18,8 +18,13 @@ import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -93,6 +98,32 @@ public class ResourceServerConfig {
         decoder.setJwtValidator(new DelegatingOAuth2TokenValidator<>(validators));
 
         return decoder;
+    }
+
+
+    @Bean
+    public CorsConfigurationSource corsConfiguration(
+        @Value("${code.config.web.cors.allowed-origins}") String allowedOrigins
+    ) {
+        var corsConfig = new CorsConfiguration();
+        corsConfig.applyPermitDefaultValues();
+        corsConfig.setAllowCredentials(true);
+        corsConfig.addAllowedMethod("GET");
+        corsConfig.addAllowedMethod("PATCH");
+        corsConfig.addAllowedMethod("POST");
+        corsConfig.addAllowedMethod("OPTIONS");
+        corsConfig.setAllowedOrigins(List.of(allowedOrigins.split("\\s*,\\s*")));
+
+        var source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfig);
+
+        return source;
+    }
+
+
+    @Bean
+    public CorsWebFilter corsWebFilter(CorsConfigurationSource corsConfiguration) {
+        return new CorsWebFilter(corsConfiguration);
     }
 
 
