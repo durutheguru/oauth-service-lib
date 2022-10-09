@@ -1,11 +1,16 @@
 package com.julianduru.oauthservicelib.modules.authflow;
 
 import com.julianduru.oauthservicelib.dto.OAuthAccessToken;
+import com.julianduru.oauthservicelib.util.WebClientExceptionHandler;
+import com.julianduru.util.exception.InvalidClientRequestException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
 /**
@@ -24,7 +29,15 @@ public class OAuthCodeController {
 
     @PostMapping
     public Mono<OAuthAccessToken> authorizeCode(@RequestParam("code") String code) {
-        return oAuthFlowService.exchangeAuthorizationCode(code);
+        return oAuthFlowService.exchangeAuthorizationCode(code)
+            .onErrorResume(WebClientExceptionHandler::handle);
+    }
+
+
+    @PostMapping("/refresh")
+    public Mono<OAuthAccessToken> refreshToken(@RequestParam("token") String refreshToken) {
+        return oAuthFlowService.refreshToken(refreshToken)
+            .onErrorResume(WebClientExceptionHandler::handle);
     }
 
 

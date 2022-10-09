@@ -46,27 +46,11 @@ public class ResourceServerConfig {
     private String jwkSetUri;
 
 
-//    @Bean
-//    @Order(Ordered.HIGHEST_PRECEDENCE)
-//    SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http, ReactiveAuthenticationManager authenticationManager) throws Exception {
-//        http
-//            .authorizeExchange()
-//            .pathMatchers("/auth/token")
-//            .authenticated()
-//            .and().httpBasic()
-//            .authenticationManager(authenticationManagerBuilder.getOrBuild())
-//            .and().cors().and().csrf().disable();
-//
-//        return http.build();
-//    }
-
-
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE + 1)
-//    @Primary
     SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http, ReactiveJwtDecoder jwtDecoder) throws Exception {
         http.authorizeExchange()
-            .pathMatchers("/auth/token")
+            .pathMatchers("/auth/token", "/auth/token/refresh")
             .permitAll()
             .and()
             .authorizeExchange()

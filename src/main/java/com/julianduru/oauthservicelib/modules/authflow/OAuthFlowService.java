@@ -27,8 +27,7 @@ import java.util.List;
 public class OAuthFlowService {
 
 
-    @Value("${code.config.oauth2.authorization-server.base-url}")
-    private String authServerBaseUrl;
+    private final WebClient.Builder oauthServerWebClientBuilder;
 
 
     private final ClientProperties clientProperties;
@@ -43,18 +42,37 @@ public class OAuthFlowService {
         formData.put("client_secret", List.of(clientProperties.getClientSecret()));
         formData.put("redirect_uri", clientProperties.getRedirectUris().stream().toList());
 
-        return WebClient.builder()
-            .baseUrl(authServerBaseUrl)
-            .clientConnector(
-                new ReactorClientHttpConnector(
-                    HttpClient.create()
-                        .wiretap(true)
-                        .wiretap(
-                            "reactor.netty.http.client.HttpClient", LogLevel.DEBUG, AdvancedByteBufFormat.TEXTUAL
-                        )
-                )
+        return oauthServerWebClientBuilder.build()
+            .post()
+            .uri("/oauth2/token")
+            .headers(
+                httpHeaders -> {
+                    httpHeaders.setBasicAuth(
+                        clientProperties.getClientId(),
+                        clientProperties.getClientSecret()
+                    );
+                    httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+                }
             )
-            .build()
+            .body(BodyInserters.fromFormData(formData))
+            .retrieve()
+            .bodyToMono(OAuthAccessToken.class)
+            .doOnNext(s -> {
+                log.info("Auth Server Response: " + s);
+            })
+            .doOnError(e -> {
+                log.info("Auth Server Error Response: " + e.getMessage());
+            });
+    }
+
+
+    public Mono<OAuthAccessToken> refreshToken(String refreshToken) {
+        var formData = new LinkedMultiValueMap<String, String>();
+        formData.put("grant_type", List.of("refresh_token"));
+        formData.put("refresh_token", List.of(refreshToken));
+
+
+        return oauthServerWebClientBuilder.build()
             .post()
             .uri("/oauth2/token")
             .headers(
