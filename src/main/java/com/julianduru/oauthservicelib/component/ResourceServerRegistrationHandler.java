@@ -38,10 +38,15 @@ public class ResourceServerRegistrationHandler {
         var request = GraphQLRequest.builder()
             .query(
                 """
-                    mutation RegisterResourceServer($serverId: String!, $allowedScopes: [String]!) {
+                    mutation RegisterResourceServer(
+                        $serverId: String!,
+                        $allowedScopes: [String]!,
+                        $userAuthoritiesOnSignUp: [String]
+                    ) {
                         registerResourceServer(server: {
                             serverId: $serverId,
-                            allowedScopes: $allowedScopes
+                            allowedScopes: $allowedScopes,
+                            userAuthoritiesOnSignUp: $userAuthoritiesOnSignUp
                         }) {
                             id
                             resourceServerId
@@ -54,7 +59,8 @@ public class ResourceServerRegistrationHandler {
             .variables(
                 Map.of(
                     "serverId", resourceServerProperties.getServerId(),
-                    "allowedScopes", resourceServerProperties.getAllowedScopes().stream().toList()
+                    "allowedScopes", resourceServerProperties.getAllowedScopes().stream().toList(),
+                    "userAuthoritiesOnSignUp", resourceServerProperties.getUserAuthoritiesOnSignUp().stream().toList()
                 )
             )
             .build();
