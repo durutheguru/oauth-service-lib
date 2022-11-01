@@ -2,9 +2,10 @@ package com.julianduru.oauthservicelib.modules.user.controller;
 
 import com.julianduru.oauthservicelib.OAuthLibConstants;
 import com.julianduru.oauthservicelib.modules.user.UserDataService;
-import com.julianduru.oauthservicelib.modules.user.dto.UserDataUpdate;
+import com.julianduru.data.messaging.dto.UserDataUpdate;
 import com.julianduru.util.api.OperationStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,4 +34,5 @@ public class UserDataController {
 
 
 }
+
 

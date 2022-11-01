@@ -1,10 +1,12 @@
-package com.julianduru.oauthservicelib.modules.user.dto;
+package com.julianduru.data.messaging.dto;
 
 
 public record UserDataUpdate(
     String username,
     String firstName,
     String lastName,
-    String email
+    String email,
+    String profilePhotoRef
 ) {
 }
+

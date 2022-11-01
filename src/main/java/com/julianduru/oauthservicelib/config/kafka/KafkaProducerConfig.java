@@ -56,7 +56,7 @@ public class KafkaProducerConfig {
 
     @Bean
     public NewTopic oauthServiceLogsTopic() {
-        return new NewTopic(oauthServiceLogsTopicName, 3, (short) 2);
+        return new NewTopic(oauthServiceLogsTopicName, 3, (short) 1);
     }
 
 
