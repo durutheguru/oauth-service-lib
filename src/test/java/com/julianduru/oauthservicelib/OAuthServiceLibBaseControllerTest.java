@@ -21,8 +21,8 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies;
 @ExtendWith({SpringExtension.class})
 @SpringBootTest(
     classes = {
-//        TestContainersConfig.class,
-//        TestDatabaseConfig.class,
+        TestContainersConfig.class,
+        TestDatabaseConfig.class,
         OauthServiceLibAutoConfiguration.class,
     },
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
