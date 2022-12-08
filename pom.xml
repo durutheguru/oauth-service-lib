@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>oauth-service-lib</artifactId>
-	<version>sample-build</version>
+	<version>0.7.0-79-SNAPSHOT</version>
 	<name>oauth-service-lib</name>
 	<description>Library for integration to OAuth_service</description>
 
