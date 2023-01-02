@@ -107,7 +107,7 @@ public abstract class OAuthServiceLibIntegrationTest {
     @AfterAll
     public void afterAll() {
         log.info("Stopping Docker Compose...");
-        dockerComposeContainer.stop();
+//        dockerComposeContainer.stop();
     }
 
 
