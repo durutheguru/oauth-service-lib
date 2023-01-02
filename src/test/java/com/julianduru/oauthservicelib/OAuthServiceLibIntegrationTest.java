@@ -45,6 +45,7 @@ public abstract class OAuthServiceLibIntegrationTest {
     @BeforeAll
     public void beforeAll() {
         log.info("Starting Docker Compose...");
+        dockerComposeContainer.start();
     }
 
 

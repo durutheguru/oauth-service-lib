@@ -34,7 +34,6 @@ public class TestContainersConfig {
                 .forStatusCodeMatching(code -> code >= 200 && code <= 500)
                 .withStartupTimeout(Duration.ofSeconds(600))
         );
-        container.start();
 
         return container;
     }
