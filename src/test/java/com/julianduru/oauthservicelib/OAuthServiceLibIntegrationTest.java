@@ -57,6 +57,11 @@ public abstract class OAuthServiceLibIntegrationTest {
     );
 
 
+    static {
+        dockerComposeContainer.start();
+    }
+
+
     @DynamicPropertySource
     protected static void setProperties(
         DynamicPropertyRegistry registry
