@@ -17,7 +17,6 @@ import java.util.Set;
 @ConfigurationProperties(
     prefix = "code.config.oauth2.resource-server"
 )
-//@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ResourceServerProperties {
 
 
@@ -27,6 +26,9 @@ public class ResourceServerProperties {
 
     @NotEmpty(message = "Resource Server Scopes are required in configuration")
     private Set<String> allowedScopes;
+
+
+    private Set<String> userAuthoritiesOnSignUp;
 
 
     private boolean autoRegister;

@@ -3,6 +3,7 @@ package com.julianduru.oauthservicelib;
 import com.julianduru.oauthservicelib.config.ClientProperties;
 import com.julianduru.oauthservicelib.config.ResourceServerProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.client.reactive.ReactiveOAuth2ClientAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,12 +20,14 @@ import org.springframework.context.annotation.Import;
 @ComponentScan(
 	basePackages = {
 		"com.julianduru.oauthservicelib",
+		"com.julianduru.kafkaintegrationlib"
 	}
 )
 @Import(ReactiveOAuth2ClientAutoConfiguration.class)
 @EnableConfigurationProperties({
 	ClientProperties.class,
-	ResourceServerProperties.class
+	ResourceServerProperties.class,
+	KafkaProperties.class,
 })
 public class OauthServiceLibAutoConfiguration {
 

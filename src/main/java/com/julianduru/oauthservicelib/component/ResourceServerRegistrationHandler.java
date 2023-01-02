@@ -12,8 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * created by julian on 26/04/2022
@@ -38,10 +40,15 @@ public class ResourceServerRegistrationHandler {
         var request = GraphQLRequest.builder()
             .query(
                 """
-                    mutation RegisterResourceServer($serverId: String!, $allowedScopes: [String]!) {
+                    mutation RegisterResourceServer(
+                        $serverId: String!,
+                        $allowedScopes: [String]!,
+                        $userAuthoritiesOnSignUp: [String]
+                    ) {
                         registerResourceServer(server: {
                             serverId: $serverId,
-                            allowedScopes: $allowedScopes
+                            allowedScopes: $allowedScopes,
+                            userAuthoritiesOnSignUp: $userAuthoritiesOnSignUp
                         }) {
                             id
                             resourceServerId
@@ -54,7 +61,11 @@ public class ResourceServerRegistrationHandler {
             .variables(
                 Map.of(
                     "serverId", resourceServerProperties.getServerId(),
-                    "allowedScopes", resourceServerProperties.getAllowedScopes().stream().toList()
+                    "allowedScopes", resourceServerProperties.getAllowedScopes().stream().toList(),
+                    "userAuthoritiesOnSignUp",
+                        resourceServerProperties.getUserAuthoritiesOnSignUp() != null ?
+                            resourceServerProperties.getUserAuthoritiesOnSignUp().stream().toList() :
+                            List.of()
                 )
             )
             .build();

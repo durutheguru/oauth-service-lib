@@ -6,11 +6,11 @@
 	<parent>
 		<groupId>com.julianduru</groupId>
 		<artifactId>parent-lib</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.1.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>oauth-service-lib</artifactId>
-	<version>0.7.0-78-SNAPSHOT</version>
+	<version>0.7.0-79-SNAPSHOT</version>
 	<name>oauth-service-lib</name>
 	<description>Library for integration to OAuth_service</description>
 
@@ -82,6 +82,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-resolver-dns-native-macos</artifactId>
 			<version>4.1.76.Final</version>
@@ -107,9 +112,14 @@
 
 		<dependency>
 			<groupId>com.julianduru</groupId>
-			<artifactId>test-lib</artifactId>
-			<version>0.3.4-21-SNAPSHOT</version>
-			<scope>test</scope>
+			<artifactId>util-lib</artifactId>
+			<version>1.1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.julianduru</groupId>
+			<artifactId>kafka-integration-lib</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -130,6 +140,18 @@
 			<artifactId>spring-jdbc</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 
 	</dependencies>
 
