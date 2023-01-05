@@ -45,6 +45,13 @@ jobs:
         with:
           java-version: 17
 
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+
       - name: Evaluate New Artifact Version
         run: |
           NEW_VERSION=${{ steps.gitversion.outputs.semVer }}
