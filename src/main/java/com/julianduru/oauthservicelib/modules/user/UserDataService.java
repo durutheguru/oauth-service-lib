@@ -1,6 +1,6 @@
 package com.julianduru.oauthservicelib.modules.user;
 
-import com.julianduru.oauthservicelib.modules.user.dto.UserDataUpdate;
+import com.julianduru.data.messaging.dto.UserDataUpdate;
 import com.julianduru.util.api.OperationStatus;
 
 /**

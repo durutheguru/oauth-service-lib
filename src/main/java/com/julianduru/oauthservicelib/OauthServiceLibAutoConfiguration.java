@@ -20,12 +20,14 @@ import org.springframework.context.annotation.Import;
 @ComponentScan(
 	basePackages = {
 		"com.julianduru.oauthservicelib",
+		"com.julianduru.kafkaintegrationlib"
 	}
 )
 @Import(ReactiveOAuth2ClientAutoConfiguration.class)
 @EnableConfigurationProperties({
 	ClientProperties.class,
-	ResourceServerProperties.class
+	ResourceServerProperties.class,
+	KafkaProperties.class,
 })
 public class OauthServiceLibAutoConfiguration {
 

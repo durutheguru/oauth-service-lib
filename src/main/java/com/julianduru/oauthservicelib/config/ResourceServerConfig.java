@@ -50,7 +50,12 @@ public class ResourceServerConfig {
     @Order(Ordered.HIGHEST_PRECEDENCE + 1)
     SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http, ReactiveJwtDecoder jwtDecoder) throws Exception {
         http.authorizeExchange()
-            .pathMatchers("/auth/token", "/auth/token/refresh")
+            .pathMatchers(
+                "/auth/token",
+                "/auth/token/refresh",
+                "/events-streams/v1/notifications/sse",
+                "/events-streams/v1/notifications/sse/**"
+            )
             .permitAll()
             .and()
             .authorizeExchange()

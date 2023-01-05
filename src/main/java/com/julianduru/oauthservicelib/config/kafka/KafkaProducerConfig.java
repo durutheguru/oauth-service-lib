@@ -38,6 +38,7 @@ public class KafkaProducerConfig {
         var props = new HashMap<>(kafkaProperties.buildProducerProperties());
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        props.put(ProducerConfig.MAX_BLOCK_MS_CONFIG, 5000);
         return props;
     }
 
@@ -56,7 +57,7 @@ public class KafkaProducerConfig {
 
     @Bean
     public NewTopic oauthServiceLogsTopic() {
-        return new NewTopic(oauthServiceLogsTopicName, 3, (short) 2);
+        return new NewTopic(oauthServiceLogsTopicName, 3, (short) 1);
     }
 
 

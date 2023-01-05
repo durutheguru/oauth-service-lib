@@ -1,6 +1,6 @@
 package com.julianduru.oauthservicelib.data;
 
-import com.julianduru.oauthservicelib.modules.user.dto.UserDataUpdate;
+import com.julianduru.data.messaging.dto.UserDataUpdate;
 import com.julianduru.util.test.DataProvider;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,8 @@ public class UserDataUpdateProvider implements DataProvider<UserDataUpdate> {
             faker.code().isbn10(false),
             faker.name().firstName(),
             faker.name().lastName(),
-            faker.internet().emailAddress()
+            faker.internet().emailAddress(),
+            faker.code().gtin13()
         );
     }
 

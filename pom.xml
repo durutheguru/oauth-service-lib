@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>oauth-service-lib</artifactId>
-	<version>sample-build</version>
+	<version>0.7.0-79-SNAPSHOT</version>
 	<name>oauth-service-lib</name>
 	<description>Library for integration to OAuth_service</description>
 
@@ -117,6 +117,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.julianduru</groupId>
+			<artifactId>kafka-integration-lib</artifactId>
+			<version>0.2.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
 			<groupId>io.projectreactor</groupId>
 			<artifactId>reactor-test</artifactId>
 			<scope>test</scope>
@@ -130,6 +136,13 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>1.17.3</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<scope>test</scope>
@@ -138,6 +151,12 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 
