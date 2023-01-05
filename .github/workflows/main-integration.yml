@@ -56,7 +56,13 @@ jobs:
         run: |
           NEW_VERSION=${{ steps.gitversion.outputs.semVer }}
           echo "Artifact Semantic Version: $NEW_VERSION"
+          echo "M2 : " ~/.m2
+          echo "ls M2: " 
+          ls ~/.m2
+          echo "ls Home Runner: "
+          ls /home/runner/.m2
           mvn versions:set -DnewVersion=${NEW_VERSION}-SNAPSHOT -s settings.xml
+
 
       - name: Build and Deploy with Maven
         env:
