@@ -57,6 +57,7 @@ jobs:
           ARTIFACT_REPO_PASSWORD: ${{ secrets.ARTIFACT_REPO_PASSWORD }}
         run: |
           echo "Artifact Repo Username: $ARTIFACT_REPO_USERNAME, Password: $ARTIFACT_REPO_PASSWORD"
+          export MAVEN_OPTS="--add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED --add-opens=java.desktop/java.awt.font=ALL-UNNAMED"
           mvn clean deploy -s settings.xml -f pom.xml -DskipTests
 
       - name: Upgrading Version
