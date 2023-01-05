@@ -6,8 +6,8 @@
 
         <server>
             <id>ossrh</id>
-            <username>durutheguru</username>
-            <password>Superman445#</password>
+            <username>${ARTIFACT_REPO_USERNAME}</username>
+            <password>${ARTIFACT_REPO_PASSWORD}</password>
         </server>
 
     </servers>
@@ -20,7 +20,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <gpg.passphrase>Super445#</gpg.passphrase>
+                <gpg.passphrase>${ARTIFACT_REPO_PASSWORD}</gpg.passphrase>
             </properties>
             <repositories>
                 <repository>
@@ -38,4 +38,3 @@
     </profiles>
 
 </settings>
-
