@@ -20,7 +20,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <gpg.passphrase>Super445#</gpg.passphrase>
+                <gpg.passphrase>${env.ARTIFACT_REPO_PASSWORD}</gpg.passphrase>
             </properties>
             <repositories>
                 <repository>
