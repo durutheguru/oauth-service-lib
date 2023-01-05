@@ -63,6 +63,7 @@ jobs:
           ls /home/runner/.m2
           mvn versions:set -DnewVersion=${NEW_VERSION}-SNAPSHOT -s settings.xml
 
+
       - name: Build and Deploy with Maven
         env:
           ARTIFACT_REPO_USERNAME: ${{ secrets.ARTIFACT_REPO_USERNAME }}
