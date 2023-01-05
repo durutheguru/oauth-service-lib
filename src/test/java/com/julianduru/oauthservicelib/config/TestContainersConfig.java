@@ -92,11 +92,13 @@ public class TestContainersConfig {
         dataSource.setURL(
             String.format(
                 "jdbc:mysql://%s:%d/oauth_service?createDatabaseIfNotExist=true",
-                oauthDbIp, oauthDbPort
+                oauthDbIp, 33080
             )
         );
         dataSource.setUser("root");
         dataSource.setPassword("1234567890");
+
+        log.info("Database Connection Properties: {}, {}", oauthDbIp, oauthDbPort);
 
         return dataSource;
     }
