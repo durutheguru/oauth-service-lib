@@ -46,11 +46,11 @@ jobs:
           java-version: 17
 
       - name: Cache Maven packages
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2-
 
       - name: Evaluate New Artifact Version
         run: |
@@ -65,7 +65,7 @@ jobs:
         run: |
           echo "Artifact Repo Username: $ARTIFACT_REPO_USERNAME, Password: $ARTIFACT_REPO_PASSWORD"
           export MAVEN_OPTS="--add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED --add-opens=java.desktop/java.awt.font=ALL-UNNAMED"
-          mvn clean deploy -s settings.xml -f pom.xml -DskipTests
+          mvn clean deploy -s settings.xml -f pom.xml
 
       - name: Upgrading Version
         run: |
