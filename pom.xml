@@ -119,7 +119,7 @@
 		<dependency>
 			<groupId>com.julianduru</groupId>
 			<artifactId>kafka-integration-lib</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.2.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -131,6 +131,13 @@
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>testcontainers</artifactId>
+			<version>1.17.3</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
 			<version>1.17.3</version>
 			<scope>test</scope>
 		</dependency>
