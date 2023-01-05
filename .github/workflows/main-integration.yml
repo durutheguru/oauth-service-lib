@@ -52,7 +52,7 @@ jobs:
           mvn versions:set -DnewVersion=${NEW_VERSION} -s settings.xml
 
       - name: Build and Deploy with Maven
-        run: mvn clean deploy -DskipTests -s settings.xml -f pom.xml
+        run: mvn clean deploy -s settings.xml -f pom.xml -DskipTests
 
       - name: Upgrading Version
         run: |
