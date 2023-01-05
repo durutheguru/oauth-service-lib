@@ -21,7 +21,12 @@ jobs:
       - name: Fetching All
         run: |
           git fetch --prune --unshallow
-
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: |
+            3.1.x
+            5.0.x
       - name: Installing GitVersion
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
@@ -40,14 +45,27 @@ jobs:
         with:
           java-version: 17
 
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+
       - name: Evaluate New Artifact Version
         run: |
           NEW_VERSION=${{ steps.gitversion.outputs.semVer }}
           echo "Artifact Semantic Version: $NEW_VERSION"
-          mvn versions:set -DnewVersion=${NEW_VERSION} -s settings.xml
+          mvn versions:set -DnewVersion=${NEW_VERSION}-SNAPSHOT -s settings.xml
 
       - name: Build and Deploy with Maven
-        run: mvn clean deploy -DskipTests -s settings.xml -f pom.xml
+        env:
+          ARTIFACT_REPO_USERNAME: ${{ secrets.ARTIFACT_REPO_USERNAME }}
+          ARTIFACT_REPO_PASSWORD: ${{ secrets.ARTIFACT_REPO_PASSWORD }}
+        run: |
+          echo "Artifact Repo Username: $ARTIFACT_REPO_USERNAME, Password: $ARTIFACT_REPO_PASSWORD"
+          export MAVEN_OPTS="--add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED --add-opens=java.desktop/java.awt.font=ALL-UNNAMED"
+          mvn clean deploy -s settings.xml -f pom.xml -DskipTests
 
       - name: Upgrading Version
         run: |
